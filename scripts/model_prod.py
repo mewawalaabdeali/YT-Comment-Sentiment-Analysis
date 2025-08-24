@@ -13,22 +13,28 @@ def promote_model():
 
     model_name = "yt_chrome_plugin_model"
     # Get the latest version in staging
-    latest_version_staging = client.get_latest_versions(model_name, stages=["Staging"]).version
+    #staging_list = client.get_latest_versions(model_name, stages=["Staging"])
 
-    # Archive the current production model
+    # --- FIX: index [0] and handle "no staging" case
+    staging_list = client.get_latest_versions(model_name, stages=["Staging"])
+    if not staging_list:
+        raise RuntimeError(f"No model found in 'Staging' for '{model_name}'")
+    latest_version_staging = staging_list[0].version
+
+    # Archive current Production (if any)
     prod_versions = client.get_latest_versions(model_name, stages=["Production"])
-    for version in prod_versions:
+    for mv in prod_versions:
         client.transition_model_version_stage(
             name=model_name,
-            version=version.version,
-            stage="Archived"
+            version=mv.version,   # str is fine; MLflow accepts str here
+            stage="Archived",
         )
 
-    # Promote the new model to production
+    # Promote Staging -> Production
     client.transition_model_version_stage(
         name=model_name,
         version=latest_version_staging,
-        stage="Production"
+        stage="Production",
     )
     print(f"Model version {latest_version_staging} promoted to Production")
 
