@@ -5,15 +5,17 @@ import pytest
 import mlflow.pyfunc
 from mlflow.exceptions import MlflowException
 
+model_name = "yt_chrome_plugin_model"
+from_alias = "staging"
+to_alias = "production"
+
 def promote_model(model_name, from_alias, to_alias):
     # Set your remote tracking URI
     mlflow.set_tracking_uri('http://3.137.209.49:5000/')
 
     client = MlflowClient()
 
-    model_name = "yt_chrome_plugin_model"
-    from_alias = "staging"
-    to_alias = "production"
+    
     
     try:
         model_staging = client.get_model_version_by_alias(model_name, from_alias)
