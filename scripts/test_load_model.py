@@ -1,6 +1,7 @@
 import mlflow.pyfunc
 import pytest
 from mlflow.tracking import MlflowClient
+import mlflow
 
 # Set your remote tracking URI
 mlflow.set_tracking_uri('http://3.137.209.49:5000/')
@@ -12,7 +13,7 @@ def test_load_latest_staging_model(model_name, alias):
     
     # Get the latest version in the specified stage
     latest_version_info = client.get_model_version_by_alias(model_name, alias)
-    latest_version = latest_version_info[0].version if latest_version_info else None
+    latest_version = latest_version_info.version if latest_version_info else None
     
     assert latest_version is not None, f"No model found in the '{alias}' stage for '{model_name}'"
 
