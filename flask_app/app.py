@@ -51,7 +51,7 @@ def preprocess_comment(comment):
 
 def load_model_and_vectorizer(model_name, model_version, vectorizer_path):
     #Set mlflow tracking URI
-    mlflow.set_tracking_uri('http://3.21.126.111:5000/')
+    mlflow.set_tracking_uri('http://3.137.209.49:5000/')
     client = MlflowClient()
     model_uri = f"models:/{model_name}/{model_version}"
     print(model_uri)
@@ -60,7 +60,7 @@ def load_model_and_vectorizer(model_name, model_version, vectorizer_path):
     return model, vectorizer
 
 #Initialize the model and vectorizer
-model, vectorizer = load_model_and_vectorizer("yt_chrome_plugin_model", "2", "./tfidf_vectorizer.pkl")
+model, vectorizer = load_model_and_vectorizer("yt_chrome_plugin_model", "3", "./tfidf_vectorizer.pkl")
 
 @app.route('/')
 def home():

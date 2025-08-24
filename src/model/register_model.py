@@ -4,7 +4,7 @@ import logging
 import os 
 
 #Set mlflow tracking URI
-mlflow.set_tracking_uri('http://http://3.21.126.111:5000/')
+mlflow.set_tracking_uri('http://3.137.209.49:5000/')
 
 
 #logging configuration
@@ -46,10 +46,10 @@ def register_model(model_name:str, model_info:dict):
 
         #Transition the model to "Staging" stage
         client = mlflow.tracking.MlflowClient()
-        client.transition_model_version_stage(
+        client.set_registered_model_alias(
             name=model_name,
             version=model_version.version,
-            stage="Staging"
+            alias="staging"
         )
 
         logger.debug(f'Model {model_name} version {model_version.version} registered and transitioned to Staging')

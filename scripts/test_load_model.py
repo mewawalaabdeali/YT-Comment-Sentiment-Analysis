@@ -3,18 +3,18 @@ import pytest
 from mlflow.tracking import MlflowClient
 
 # Set your remote tracking URI
-mlflow.set_tracking_uri('http://3.21.126.111:5000/')
+mlflow.set_tracking_uri('http://3.137.209.49:5000/')
 
-@pytest.mark.parametrize("model_name, stage", [
+@pytest.mark.parametrize("model_name, alias", [
     ("yt_chrome_plugin_model", "staging"),])
-def test_load_latest_staging_model(model_name, stage):
+def test_load_latest_staging_model(model_name, alias):
     client = MlflowClient()
     
     # Get the latest version in the specified stage
-    latest_version_info = client.get_latest_versions(model_name, stages=[stage])
+    latest_version_info = client.get_latest_versions(model_name, alias=[alias])
     latest_version = latest_version_info[0].version if latest_version_info else None
     
-    assert latest_version is not None, f"No model found in the '{stage}' stage for '{model_name}'"
+    assert latest_version is not None, f"No model found in the '{alias}' stage for '{model_name}'"
 
     try:
         # Load the latest version of the model
@@ -23,7 +23,7 @@ def test_load_latest_staging_model(model_name, stage):
 
         # Ensure the model loads successfully
         assert model is not None, "Model failed to load"
-        print(f"Model '{model_name}' version {latest_version} loaded successfully from '{stage}' stage.")
+        print(f"Model '{model_name}' version {latest_version} loaded successfully from '{alias}' stage.")
 
     except Exception as e:
         pytest.fail(f"Model loading failed with error: {e}")
