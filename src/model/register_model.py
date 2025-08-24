@@ -57,13 +57,35 @@ def register_model(model_name:str, model_info:dict):
         logger.error('Error during model registration: %s', e)
         raise
 
+def register_model_new(model_name: str, model_info: dict):
+    """Register the model to the MLflow Model Registry."""
+    try:
+        model_uri = f"runs:/{model_info['run_id']}/{model_info['model_path']}"
+        
+        # Register the model
+        model_version = mlflow.register_model(model_uri, model_name)
+        
+        # Transition the model to "Staging" stage
+        client = mlflow.tracking.MlflowClient()
+        client.transition_model_version_stage(
+            name=model_name,
+            version=model_version.version,
+            stage="Staging"
+        )
+        
+        logger.debug(f'Model {model_name} version {model_version.version} registered and transitioned to Staging.')
+    except Exception as e:
+        logger.error('Error during model registration: %s', e)
+        raise
+
+
 def main():
     try:
         model_info_path = 'experiment_info.json'
         model_info = load_model_info(model_info_path)
 
         model_name = "yt_chrome_plugin_model"
-        register_model(model_name, model_info)
+        register_model_new(model_name, model_info)
     except Exception as e:
         logger.error('Failed to complete the model registration process: %s', e)
         print(f"Error: {e}")
