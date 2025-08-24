@@ -11,7 +11,7 @@ def test_load_latest_staging_model(model_name, alias):
     client = MlflowClient()
     
     # Get the latest version in the specified stage
-    latest_version_info = client.get_model_version_by_alias(model_name, alias=[alias])
+    latest_version_info = client.get_model_version_by_alias(model_name, alias)
     latest_version = latest_version_info[0].version if latest_version_info else None
     
     assert latest_version is not None, f"No model found in the '{alias}' stage for '{model_name}'"
