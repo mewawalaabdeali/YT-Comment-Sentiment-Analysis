@@ -2,7 +2,7 @@ import pytest
 import requests
 import json
 
-BASE_URL = "http://localhost:5000"
+BASE_URL = "http://0.0.0.0:5000"
 
 def test_predict_endpoint():
     data = {
