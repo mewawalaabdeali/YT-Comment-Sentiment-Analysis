@@ -30,7 +30,7 @@ def promote_model(model_name, from_alias, to_alias):
     except MlflowException:
         pass
 
-    client.set_registered_model_alias(model_name, to_alias, latest_version)
+    client.set_registered_model_alias(model_name, to_alias, int(latest_version))
 
     try:
         if older_version is not None:
