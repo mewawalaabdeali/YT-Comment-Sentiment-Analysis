@@ -128,7 +128,7 @@ jobs:
       - name: Tag Docker image
         if: success()
         run: |
-          docker tag yt-chrome-plugin:git 390844758498.dkr.ecr.us-east-1.amazonaws.com/yt-chrome-plugin:latest
+          docker tag yt-chrome-plugin:git 390844758498.dkr.ecr.us-east-1.amazonaws.com/yt-chrome-plugin:git
 
       - name: Push Docker image to AWS ECR
         if: success()
