@@ -35,11 +35,11 @@ def test_model_with_vectorizer(model_name, alias, vectorizer_path):
         #Create a dummy input for the model
         input_text = 'I liked the content of your video. Well researched.'
         input_data = vectorizer.transform([input_text])
-        input_df = pd.DataFrame(input_data.toarray(), columns=vectorizer.get_features_names_out())
+        input_df = pd.DataFrame(input_data.toarray(), columns=vectorizer.get_feature_names_out())
 
         prediction = model.predict(input_df)
 
-        assert input_df.shape[1] == len(vectorizer.get_features_names_out()), "Input feature count mismatch"
+        assert input_df.shape[1] == len(vectorizer.get_feature_names_out()), "Input feature count mismatch"
 
         #Verify the output shape(assuming binary classification with a single output)
         assert len(prediction) == input_df.shape[0], "Output row count mismatch"
