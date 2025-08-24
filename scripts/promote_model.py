@@ -48,5 +48,5 @@ def promote_model(model_name, from_alias, to_alias):
     
 
 if __name__=="__main__":
-    promote_model()
+    promote_model("yt_chrome_plugin_model", "staging", "production")
 
