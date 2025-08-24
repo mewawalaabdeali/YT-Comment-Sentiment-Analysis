@@ -82,7 +82,10 @@ def predict_with_timestamps():
         #Transform comments using the vectorizer
         transformed_comments = vectorizer.transform(preprocessed_comments)
 
-        X_df = pd.DataFrame(transformed_comments.toarray(),columns=vectorizer.get_feature_names_out()).astype("float64")
+        names = (vectorizer.get_feature_names_out() if hasattr(vectorizer, "get_feature_names_out")
+                 else vectorizer.get_feature_names())
+
+        X_df = pd.DataFrame(transformed_comments.toarray(),columns=names).astype("float64")
 
 
         #Make predictions
@@ -111,7 +114,10 @@ def predict():
 
         #Transform comment using vectorizer
         transformed_comments = vectorizer.transform(preprocessed_comments)
-        X_df = pd.DataFrame(transformed_comments.toarray(),columns=vectorizer.get_feature_names_out()).astype("float64")
+
+        names = (vectorizer.get_feature_names_out() if hasattr(vectorizer, "get_feature_names_out")
+                 else vectorizer.get_feature_names())
+        X_df = pd.DataFrame(transformed_comments.toarray(),columns=names).astype("float64")
 
         #Make predictions
         predictions = model.predict(X_df).tolist()
