@@ -1,26 +1,42 @@
 import pytest
 import requests
 import json
+import matplotlib
+matplotlib.use('Agg')  # Use non-interactive backend before importing pyplot
 
-BASE_URL = "http://0.0.0.0:5000"
+from flask import Flask, request, jsonify, send_file
+from flask_cors import CORS
+import io
+import matplotlib.pyplot as plt
+from wordcloud import WordCloud
+import mlflow
+import numpy as np
+import joblib
+import re
+import pandas as pd
+from nltk.corpus import stopwords
+from nltk.stem import WordNetLemmatizer
+from mlflow.tracking import MlflowClient
+import matplotlib.dates as mdates
+BASE_URL = "http://localhost:5000"  # Replace with your deployed URL if needed
 
 def test_predict_endpoint():
     data = {
         "comments": ["This is a great product!", "Not worth the money.", "It's okay."]
     }
     response = requests.post(f"{BASE_URL}/predict", json=data)
-    assert response.status_code==200
+    assert response.status_code == 200
     assert isinstance(response.json(), list)
 
 def test_predict_with_timestamps_endpoint():
     data = {
-        "comments":[
+        "comments": [
             {"text": "This is fantastic!", "timestamp": "2024-10-25 10:00:00"},
             {"text": "Could be better.", "timestamp": "2024-10-26 14:00:00"}
         ]
     }
     response = requests.post(f"{BASE_URL}/predict_with_timestamps", json=data)
-    assert response.status_code==200
+    assert response.status_code == 200
     assert all('sentiment' in item for item in response.json())
 
 def test_generate_chart_endpoint():
