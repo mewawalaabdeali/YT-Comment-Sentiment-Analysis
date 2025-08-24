@@ -1,0 +1,25 @@
+# Web
+Flask==3.0.3
+Flask-Cors==5.0.0
+boto3==1.35.36
+
+# MLflow & friends — match model
+mlflow==2.15.0           # model requires this exact version
+# DO NOT install mlflow-skinny alongside mlflow (remove it)
+
+# Core scientific stack — match model
+numpy==1.26.4
+pandas==2.2.2
+scikit-learn==1.7.1
+scipy==1.14.0
+cloudpickle==3.0.0
+pyarrow==15.0.2
+psutil==6.0.0
+cffi==1.16.0
+
+# Your libs
+lightgbm==4.5.0
+matplotlib==3.9.1        # model wants 3.9.1 (you had 3.9.2)
+wordcloud==1.9.3
+nltk==3.9.1
+joblib==1.4.2
