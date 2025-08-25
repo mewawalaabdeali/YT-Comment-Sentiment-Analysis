@@ -120,17 +120,19 @@ jobs:
           aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 384570460616.dkr.ecr.us-east-2.amazonaws.com
 
-      - name: Build Docker image
-        if: success()
-        run: |
-          docker build -t yt-chrome-plugin:git .
+      - name: Login to Dockerhub
+        uses: docker/login-action@v3
+        with: 
+          username: ${{secrets.DOCKERHUB_USERNAME}}
+          password: ${{secrets.DOCKERHUB_TOKEN}}      
 
-      - name: Tag Docker image
-        if: success()
+      - name: Build image
         run: |
-          docker tag yt-chrome-plugin:git 384570460616.dkr.ecr.us-east-2.amazonaws.com/yt-chrome-plugin:git
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/yt-chrome-plugin:${{ github.sha }} \
+                 -t ${{ secrets.DOCKERHUB_USERNAME }}/yt-chrome-plugin:latest .
+      - name: Push image
+        run: |
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/yt-chrome-plugin:${{ github.sha }}
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/yt-chrome-plugin:latest
 
-      - name: Push Docker image to AWS ECR
-        if: success()
-        run: |
-          docker push 384570460616.dkr.ecr.us-east-2.amazonaws.com/yt-chrome-plugin:git
+      
