@@ -11,7 +11,7 @@ to_alias = "production"
 
 def promote_model(model_name, from_alias, to_alias):
     # Set your remote tracking URI
-    mlflow.set_tracking_uri('http://3.137.209.49:5000/')
+    mlflow.set_tracking_uri('http://3.134.94.213:5000/')
 
     client = MlflowClient()
 

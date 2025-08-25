@@ -7,7 +7,7 @@ from mlflow.exceptions import MlflowException
 
 def promote_model():
     # Set up AWS MLflow tracking URI
-    mlflow.set_tracking_uri('http://3.137.209.49:5000/')
+    mlflow.set_tracking_uri('http://3.134.94.213:5000/')
 
     client = mlflow.MlflowClient()
 

@@ -7,7 +7,7 @@ import pickle
 
 
 # Set your remote tracking URI
-mlflow.set_tracking_uri('http://3.137.209.49:5000/')
+mlflow.set_tracking_uri('http://3.134.94.213:5000/')
 
 @pytest.mark.parametrize("model_name, alias, vectorizer_path", [
     ("yt_chrome_plugin_model", "staging", "tfidf_vectorizer.pkl"),
