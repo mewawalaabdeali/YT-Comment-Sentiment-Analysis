@@ -129,10 +129,10 @@ jobs:
       - name: Build image
         run: |
           docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/yt-chrome-plugin:${{ github.sha }} \
-                 -t ${{ secrets.DOCKERHUB_USERNAME }}/yt-chrome-plugin:latest .
+                 -t ${{ secrets.DOCKERHUB_USERNAME }}/yt-chrome-plugin:stablecloud .
       - name: Push image
         run: |
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/yt-chrome-plugin:${{ github.sha }}
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/yt-chrome-plugin:latest
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/yt-chrome-plugin:stablecloud
 
       
